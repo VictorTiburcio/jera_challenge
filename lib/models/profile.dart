@@ -9,7 +9,7 @@ class Profile {
   Profile.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     name = map['name'];
-    main = map['main'];
+    main = map['main'] == 1 ? true : false;
     accountId = map['account_id'];
   }
 
@@ -17,7 +17,7 @@ class Profile {
     Map<String, dynamic> map = {
       'id': id,
       'name': name,
-      'main': main,
+      'main': main == true ? 1 : 0,
       'account_id': accountId,
     };
 
