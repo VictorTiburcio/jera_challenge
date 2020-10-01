@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/account_controller.dart';
-import '../screens/logged.dart';
-import '../screens/sign_in_screen.dart';
+import 'index_screen.dart';
+import 'sign_in_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String route = '/';
@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, account, child) {
         switch (account.authState) {
           case AuthenticationState.authenticated:
-            return Logged();
+            return IndexScreen();
           case AuthenticationState.unauthenticated:
             return SignInScreen();
           default:
