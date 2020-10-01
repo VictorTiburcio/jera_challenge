@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/account_controller.dart';
+import 'controllers/the_movie_db_controller.dart';
 import 'utils/mobile_router.dart';
 
 void main() => runApp(MyApp());
@@ -17,6 +18,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AccountController()..init()),
+        ChangeNotifierProvider(
+            create: (_) => TheMovieDBController()..popularMovies()),
       ],
       child: MaterialApp(
         title: 'Jera Challenge',
