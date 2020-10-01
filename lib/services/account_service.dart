@@ -23,6 +23,8 @@ class AccountService {
     SharedPreferences prefs = await _prefs;
     prefs.setString('email', data['email']);
     prefs.setString('password', data['password']);
+    prefs.setInt('current_profile_id', 1);
+    print('created');
     return await database.signUp(data);
   }
 
@@ -32,6 +34,7 @@ class AccountService {
     if (account != null) {
       prefs.setString('email', email);
       prefs.setString('password', password);
+      prefs.setInt('current_profile_id', 1);
       return account;
     }
     return null;
