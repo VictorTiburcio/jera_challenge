@@ -19,8 +19,22 @@ class DatabaseQueries {
   );
   ''';
 
+  static const String _createTableWatchList = '''
+  CREATE TABLE WatchList (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    overview TEXT,
+    release_date TEXT,
+    vote_average TEXT,
+    poster_path TEXT,
+    profile_id INTEGER NOT NULL,
+    FOREIGN KEY (profile_id) REFERENCES Profiles(id) ON DELETE CASCADE
+  );
+  ''';
+
   static const List<String> queries = [
     _createTableAccounts,
     _createTableProfiles,
+    _createTableWatchList,
   ];
 }
