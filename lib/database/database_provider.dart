@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/account.dart';
+import '../models/movie.dart';
 import '../models/profile.dart';
 import 'database_queries.dart';
 
@@ -82,5 +83,31 @@ class DatabaseProvider {
     final Database db = await database;
     Profile profile = Profile(account.name, false, account.id);
     await db.insert('Profiles', profile.toMap());
+  }
+
+  void addMovieToWatchList(Movie movie, int profileId) async {
+    final Database db = await database;
+    Map<String, dynamic> movieMap = movie.toMap();
+    movieMap.addAll({'profile_id': profileId});
+    await db.insert('WatchList', movieMap);
+  }
+
+  Future<List<Movie>> selectWatchList(int profileId) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> queryResult = await db.query(
+      'WatchList',
+      where: 'profile_id = ?',
+      whereArgs: [profileId],
+    );
+
+    if (queryResult.isNotEmpty) {
+      List<Movie> movies = [];
+      for (Map<String, dynamic> movie in queryResult) {
+        movies.add(Movie.fromMap(movie));
+      }
+      return movies;
+    } else {
+      return null;
+    }
   }
 }
