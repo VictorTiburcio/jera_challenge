@@ -29,7 +29,7 @@ class TheMovieDBController extends ChangeNotifier {
     theMovieDBState = TheMovieDBState.loading;
     notifyListeners();
 
-    if (search == '') {
+    if (search.isEmpty) {
       popularMovies();
     } else {
       Response response = await theMovieDBService.search(search);

@@ -37,12 +37,28 @@ class SignInScreen extends StatelessWidget {
                 label: 'E-mail',
                 inputType: TextInputType.emailAddress,
                 capitalization: TextCapitalization.none,
+                validator: (String text) {
+                  if (text.trim().isEmpty) {
+                    return 'The e-mail can\'t be blank!';
+                  } else if (!text.contains('@') || text.trim().length < 6) {
+                    return 'Invalid e-mail!';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 15.0),
               CustomTextFormField(
                 ctrl: _passwordCtrl,
                 label: 'Password',
                 password: true,
+                validator: (String text) {
+                  if (text.trim().isEmpty) {
+                    return 'The password can\'t be blank!';
+                  } else if (text.trim().length < 6) {
+                    return 'The password must have at least 6 digits!';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 15.0),
               Text.rich(
@@ -64,10 +80,15 @@ class SignInScreen extends StatelessWidget {
               CustomButton(
                 child: Text('Sign In'),
                 onPressed: () {
-                  Provider.of<AccountController>(context, listen: false).signIn(
-                    email: _emailCtrl.text.trim(),
-                    password: _passwordCtrl.text.trim(),
-                  );
+                  if (_formKey.currentState.validate()) {
+                    Provider.of<AccountController>(
+                      context,
+                      listen: false,
+                    ).signIn(
+                      email: _emailCtrl.text.trim(),
+                      password: _passwordCtrl.text.trim(),
+                    );
+                  }
                 },
               ),
             ],

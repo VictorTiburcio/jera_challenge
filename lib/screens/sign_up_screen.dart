@@ -36,6 +36,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ctrl: _nameCtrl,
                   label: 'Name',
                   hint: 'Pedro',
+                  validator: (String text) {
+                    if (text.trim().isEmpty) {
+                      return 'The name can\'t be blank!';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 15.0),
                 Row(
@@ -47,6 +53,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ctrl: _birthdayCtrl,
                         label: 'Birthday',
                         hint: 'DD/MM/YYYY',
+                        validator: (String text) {
+                          if (text.isEmpty) {
+                            return 'The birthday can\'t be blank!';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     SizedBox(width: 15.0),
@@ -88,6 +100,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   label: 'Email',
                   hint: 'example@example.com',
                   capitalization: TextCapitalization.none,
+                  validator: (String text) {
+                    if (text.trim().isEmpty) {
+                      return 'The e-mail can\'t be blank!';
+                    } else if (!text.contains('@') || text.trim().length < 6) {
+                      return 'Invalid e-mail!';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 15.0),
                 CustomTextFormField(
@@ -95,6 +115,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   label: 'Password',
                   capitalization: TextCapitalization.none,
                   password: true,
+                  validator: (String text) {
+                    if (text.trim().isEmpty) {
+                      return 'The password can\'t be blank!';
+                    } else if (text.trim().length < 6) {
+                      return 'The password must have at least 6 digits!';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 15.0),
                 CustomTextFormField(
@@ -102,6 +130,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   label: 'Password confirmation',
                   capitalization: TextCapitalization.none,
                   password: true,
+                  validator: (String text) {
+                    if (text != _passwordCtrl.text.trim()) {
+                      return 'Password confirmation mismatch!';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 15.0),
                 CustomButton(

@@ -24,7 +24,6 @@ class AccountService {
     prefs.setString('email', data['email']);
     prefs.setString('password', data['password']);
     prefs.setInt('current_profile_id', 1);
-    print('created');
     return await database.signUp(data);
   }
 
