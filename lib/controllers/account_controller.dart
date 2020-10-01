@@ -12,7 +12,8 @@ class AccountController extends ChangeNotifier {
     authState = AuthenticationState.authenticating;
     notifyListeners();
 
-    if (await accountService.anAccountIsLogged()) {
+    account = await accountService.accountLogged();
+    if (account != null) {
       authState = AuthenticationState.authenticated;
     } else {
       authState = AuthenticationState.unauthenticated;
@@ -24,9 +25,33 @@ class AccountController extends ChangeNotifier {
     authState = AuthenticationState.authenticating;
     notifyListeners();
 
-    accountService.signUp(data: data);
+    account = await accountService.signUp(data: data);
 
     authState = AuthenticationState.authenticated;
+    notifyListeners();
+  }
+
+  void signIn({@required String email, @required String password}) async {
+    authState = AuthenticationState.authenticating;
+    notifyListeners();
+
+    account = await accountService.signIn(email: email, password: password);
+    if (account != null) {
+      authState = AuthenticationState.authenticated;
+    } else {
+      authState = AuthenticationState.unauthenticated;
+    }
+
+    notifyListeners();
+  }
+
+  void signOut() {
+    authState = AuthenticationState.authenticating;
+    notifyListeners();
+
+    accountService.signOut();
+
+    authState = AuthenticationState.unauthenticated;
     notifyListeners();
   }
 }

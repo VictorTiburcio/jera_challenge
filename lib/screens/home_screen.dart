@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../controllers/account_controller.dart';
 import '../screens/logged.dart';
-import '../screens/sign_up_screen.dart';
+import '../screens/sign_in_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String route = '/';
@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
           case AuthenticationState.authenticated:
             return Logged();
           case AuthenticationState.unauthenticated:
-            return SignUpScreen();
+            return SignInScreen();
           default:
             return Scaffold(body: Center(child: CircularProgressIndicator()));
         }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -33,11 +34,13 @@ class DatabaseProvider {
   }
 
   // INSERT INTO Accounts(...) VALUES(...);
-  void insertAccount(Map<String, dynamic> account) async {
+  Future signUp(Map<String, dynamic> account) async {
     final Database db = await database;
     int id = await db.insert('Accounts', account);
 
     insertFirstProfile(account, id);
+
+    return signIn(email: account['email'], password: account['password']);
   }
 
   // SELECT * FROM Accounts where id = ?;
@@ -52,6 +55,19 @@ class DatabaseProvider {
     } else {
       return null;
     }
+  }
+
+  Future signIn({@required String email, @required String password}) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> queryResult = await db.query(
+      'Accounts',
+      where: 'email = ? and password = ?',
+      whereArgs: [email, password],
+    );
+    if (queryResult == null) {
+      return null;
+    }
+    return Account.fromMap(queryResult.first);
   }
 
   // INSERT INTO Profiles(...) VALUES(...);
