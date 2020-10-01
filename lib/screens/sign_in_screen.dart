@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/account_controller.dart';
-import '../screens/sign_up_screen.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_form_field.dart';
+import 'sign_up_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   static const String route = '/sign_in';
