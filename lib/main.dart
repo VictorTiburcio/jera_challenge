@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'controllers/account_controller.dart';
 import 'controllers/the_movie_db_controller.dart';
+import 'controllers/watch_list_controller.dart';
 import 'utils/mobile_router.dart';
 
 void main() => runApp(MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AccountController()..init()),
         ChangeNotifierProvider(
             create: (_) => TheMovieDBController()..popularMovies()),
+        ChangeNotifierProvider(create: (_) => WatchListController()),
       ],
       child: MaterialApp(
         title: 'Jera Challenge',
