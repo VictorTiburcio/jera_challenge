@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'search_screen.dart';
+import 'watch_list_screen.dart';
 
 class IndexScreen extends StatefulWidget {
   static const String route = '/index';
@@ -10,7 +11,7 @@ class IndexScreen extends StatefulWidget {
 }
 
 class _IndexScreenState extends State<IndexScreen> {
-  static final List<Widget> _screens = [Container(), SearchScreen()];
+  static final List<Widget> _screens = [WatchListScreen(), SearchScreen()];
   int _currentScreenIndex = 0;
 
   @override

@@ -119,6 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         context,
                         listen: false,
                       ).signUp(data: data);
+                      Navigator.pop(context);
                     }
                   },
                 )
