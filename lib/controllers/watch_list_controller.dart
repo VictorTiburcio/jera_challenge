@@ -15,6 +15,8 @@ class WatchListController extends ChangeNotifier {
     List<Movie> watchList = await _watchListService.loadWatchList();
     if (watchList != null) {
       movies = watchList;
+    } else {
+      movies = [];
     }
 
     state = WatchListState.ready;
