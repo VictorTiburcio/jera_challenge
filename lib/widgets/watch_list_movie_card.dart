@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,14 +21,15 @@ class WatchListMovieCard extends StatefulWidget {
 class _WatchListMovieCardState extends State<WatchListMovieCard> {
   @override
   Widget build(BuildContext context) {
+    String posterPath =
+        '${Constants.lowQualityImageBaseUrl}/${widget.movie.posterPath}';
+
     return Container(
       height: 450.0,
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: NetworkImage(
-            '${Constants.lowQualityImageBaseUrl}/${widget.movie.posterPath}',
-          ),
+          image: NetworkImage(posterPath),
         ),
       ),
       child: Column(
@@ -50,11 +56,44 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
                     });
                   },
                 ),
+                Spacer(),
+                InkWell(
+                  child: Icon(Icons.share, color: Colors.redAccent),
+                  onTap: () {
+                    sharePoster(posterPath, context);
+                  },
+                ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void sharePoster(String posterPath, BuildContext context) async {
+    loadingDialog(context);
+    var request = await HttpClient().getUrl(Uri.parse(posterPath));
+    var response = await request.close();
+    Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+    Navigator.of(context).pop();
+    await Share.file('What does the fox say?', 'image.jpg', bytes, 'image/jpg');
+  }
+
+  void loadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            width: 150,
+            height: 150,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        );
+      },
     );
   }
 }
