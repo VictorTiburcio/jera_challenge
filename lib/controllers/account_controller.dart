@@ -21,14 +21,18 @@ class AccountController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void signUp({@required Map<String, dynamic> data}) async {
+  Future<bool> signUp({@required Map<String, dynamic> data}) async {
     authState = AuthenticationState.authenticating;
     notifyListeners();
 
     account = await accountService.signUp(data: data);
-
-    authState = AuthenticationState.authenticated;
+    if (account == null) {
+      authState = AuthenticationState.unauthenticated;
+    } else {
+      authState = AuthenticationState.authenticated;
+    }
     notifyListeners();
+    return account == null;
   }
 
   void signIn({@required String email, @required String password}) async {
@@ -39,7 +43,7 @@ class AccountController extends ChangeNotifier {
     if (account != null) {
       authState = AuthenticationState.authenticated;
     } else {
-      authState = AuthenticationState.unauthenticated;
+      authState = AuthenticationState.signInFailed;
     }
 
     notifyListeners();
@@ -61,4 +65,5 @@ enum AuthenticationState {
   authenticating,
   authenticated,
   unauthenticated,
+  signInFailed,
 }

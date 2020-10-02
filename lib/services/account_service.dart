@@ -21,10 +21,11 @@ class AccountService {
 
   Future signUp({@required Map<String, dynamic> data}) async {
     SharedPreferences prefs = await _prefs;
+    Account account = await database.signUp(data);
     prefs.setString('email', data['email']);
     prefs.setString('password', data['password']);
     prefs.setInt('current_profile_id', 1);
-    return await database.signUp(data);
+    return account;
   }
 
   Future signIn({@required String email, @required String password}) async {

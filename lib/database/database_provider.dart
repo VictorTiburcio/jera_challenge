@@ -37,11 +37,14 @@ class DatabaseProvider {
   // INSERT INTO Accounts(...) VALUES(...);
   Future signUp(Map<String, dynamic> account) async {
     final Database db = await database;
-    int id = await db.insert('Accounts', account);
-
-    insertFirstProfile(account, id);
-
-    return signIn(email: account['email'], password: account['password']);
+    try {
+      int id = await db.insert('Accounts', account);
+      insertFirstProfile(account, id);
+      return signIn(email: account['email'], password: account['password']);
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   // SELECT * FROM Accounts where id = ?;
@@ -60,15 +63,17 @@ class DatabaseProvider {
 
   Future signIn({@required String email, @required String password}) async {
     final Database db = await database;
-    final List<Map<String, dynamic>> queryResult = await db.query(
-      'Accounts',
-      where: 'email = ? and password = ?',
-      whereArgs: [email, password],
-    );
-    if (queryResult == null) {
+    try {
+      final List<Map<String, dynamic>> queryResult = await db.query(
+        'Accounts',
+        where: 'email = ? and password = ?',
+        whereArgs: [email, password],
+      );
+      return Account.fromMap(queryResult.first);
+    } catch (e) {
+      print(e);
       return null;
     }
-    return Account.fromMap(queryResult.first);
   }
 
   // INSERT INTO Profiles(...) VALUES(...);

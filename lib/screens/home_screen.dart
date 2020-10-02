@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
         switch (account.authState) {
           case AuthenticationState.authenticated:
             return IndexScreen();
+          case AuthenticationState.signInFailed:
           case AuthenticationState.unauthenticated:
             return SignInScreen();
           default:
