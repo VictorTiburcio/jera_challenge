@@ -25,9 +25,9 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: Consumer<TheMovieDBController>(
         builder: (context, controller, child) {
-          switch (controller.theMovieDBState) {
-            case TheMovieDBState.ready:
-              return MovieList(controller.movies);
+          switch (controller.popularMoviesState) {
+            case PopularMoviesState.ready:
+              return MovieList(controller.popularMoviesList);
             default:
               return Center(child: CircularProgressIndicator());
           }

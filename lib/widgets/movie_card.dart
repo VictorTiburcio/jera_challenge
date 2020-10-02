@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controllers/the_movie_db_controller.dart';
 import '../controllers/watch_list_controller.dart';
 import '../models/movie.dart';
 import '../utils/constants.dart';
@@ -33,6 +34,9 @@ class MovieCard extends StatelessWidget {
                   onTap: () {
                     Provider.of<WatchListController>(context, listen: false)
                         .addToWatchList(movie);
+
+                    Provider.of<TheMovieDBController>(context, listen: false)
+                        .suggestedMovies();
                   },
                 ),
               ],
