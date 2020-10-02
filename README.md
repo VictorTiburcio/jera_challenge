@@ -9,3 +9,4 @@ This project has the objective of show software development skills accomplishing
 - path: ^1.7.0
 - sqflite: ^1.3.1+1
 - shared_preferences: ^0.5.12
+- esys_flutter_share: ^1.0.2
