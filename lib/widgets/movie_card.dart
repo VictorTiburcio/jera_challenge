@@ -35,10 +35,6 @@ class MovieCard extends StatelessWidget {
                         .addToWatchList(movie);
                   },
                 ),
-                Spacer(),
-                Icon(Icons.thumb_up, color: Colors.redAccent),
-                SizedBox(width: 8.0),
-                Icon(Icons.thumb_down, color: Colors.redAccent)
               ],
             ),
           ),
