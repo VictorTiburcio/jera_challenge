@@ -132,7 +132,7 @@ class DatabaseProvider {
       }
       return movies;
     } else {
-      return null;
+      return [];
     }
   }
 
