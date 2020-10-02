@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           create: (_) => AccountController()..init(),
         ),
         ChangeNotifierProvider(
-          create: (_) => TheMovieDBController()..popularMovies(),
+          create: (_) => TheMovieDBController()..init(),
         ),
         ChangeNotifierProvider(
           create: (_) => WatchListController()..loadWatchList(),

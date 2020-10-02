@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'profiles_screen.dart';
 import 'search_screen.dart';
+import 'suggested_movies_screen.dart';
 import 'watch_list_screen.dart';
 
 class IndexScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _IndexScreenState extends State<IndexScreen> {
   static final List<Widget> _screens = [
     WatchListScreen(),
     SearchScreen(),
+    SuggestedMoviesScreen(),
     ProfilesScreen(),
   ];
   int _currentScreenIndex = 0;
@@ -24,6 +26,7 @@ class _IndexScreenState extends State<IndexScreen> {
     return Scaffold(
       body: _screens[_currentScreenIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).accentColor,
         currentIndex: _currentScreenIndex,
         selectedItemColor: Colors.white,
@@ -32,15 +35,19 @@ class _IndexScreenState extends State<IndexScreen> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.watch_later),
-            title: Text('Watch List'),
+            label: 'Watch List',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text('Search'),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.movie),
+            label: 'Suggested',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text('Profiles'),
+            label: 'Profiles',
           ),
         ],
       ),

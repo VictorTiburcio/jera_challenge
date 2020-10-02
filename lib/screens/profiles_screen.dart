@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controllers/account_controller.dart';
 import '../controllers/profile_controller.dart';
+import '../controllers/the_movie_db_controller.dart';
 import '../controllers/watch_list_controller.dart';
 import '../widgets/custom_text_form_field.dart';
 
@@ -12,7 +14,19 @@ class ProfilesScreen extends StatelessWidget {
       builder: (context, controller, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Profiles'),
+            title: Row(
+              children: [
+                Text('Profiles'),
+                Spacer(),
+                InkWell(
+                  child: Icon(Icons.logout),
+                  onTap: () {
+                    Provider.of<AccountController>(context, listen: false)
+                        .signOut();
+                  },
+                ),
+              ],
+            ),
           ),
           body: GridView.count(
             padding: const EdgeInsets.all(16.0),
@@ -26,12 +40,15 @@ class ProfilesScreen extends StatelessWidget {
                   color: Colors.green,
                   child: Center(child: Text(profile.name)),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   Provider.of<ProfileController>(context, listen: false)
                       .changeProfile(profile);
 
                   Provider.of<WatchListController>(context, listen: false)
                       .loadWatchList();
+
+                  Provider.of<TheMovieDBController>(context, listen: false)
+                      .suggestedMovies();
                 },
               );
             }).toList(),

@@ -10,4 +10,6 @@ class Constants {
       '$imagesBaseUrl/$lowQualityImageCode';
   static const String searchMovieUrl =
       '$baseUrl/search/movie?api_key=$apiKey&language=$language&include_adult=false&query=';
+  static const String suggestedMoviesUrl =
+      '$baseUrl/movie/{movie_id}/similar?api_key=$apiKey&language=$language&include_adult=false';
 }
