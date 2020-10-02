@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'profiles_screen.dart';
 import 'search_screen.dart';
 import 'watch_list_screen.dart';
 
@@ -11,7 +12,11 @@ class IndexScreen extends StatefulWidget {
 }
 
 class _IndexScreenState extends State<IndexScreen> {
-  static final List<Widget> _screens = [WatchListScreen(), SearchScreen()];
+  static final List<Widget> _screens = [
+    WatchListScreen(),
+    SearchScreen(),
+    ProfilesScreen(),
+  ];
   int _currentScreenIndex = 0;
 
   @override
@@ -32,6 +37,10 @@ class _IndexScreenState extends State<IndexScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             title: Text('Search'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Profiles'),
           ),
         ],
       ),

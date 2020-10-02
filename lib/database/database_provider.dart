@@ -79,10 +79,30 @@ class DatabaseProvider {
   }
 
   // INSERT INTO Profiles(...) VALUES(...);
-  void insertNewProfile(Account account) async {
+  Future<Profile> insertNewProfile(Account account, String profileName) async {
     final Database db = await database;
-    Profile profile = Profile(account.name, false, account.id);
-    await db.insert('Profiles', profile.toMap());
+    Profile profile = Profile(profileName, false, account.id);
+    profile.id = await db.insert('Profiles', profile.toMap());
+    return profile;
+  }
+
+  Future<List<Profile>> loadProfiles(Account account) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> queryResult = await db.query(
+      'Profiles',
+      where: 'account_id = ?',
+      whereArgs: [account.id],
+    );
+
+    if (queryResult.isNotEmpty) {
+      List<Profile> profiles = [];
+      for (Map<String, dynamic> profile in queryResult) {
+        profiles.add(Profile.fromMap(profile));
+      }
+      return profiles;
+    } else {
+      return null;
+    }
   }
 
   void addMovieToWatchList(Movie movie, int profileId) async {
