@@ -135,4 +135,14 @@ class DatabaseProvider {
       return null;
     }
   }
+
+  void changeWatchedStatus(Movie movie, int profileId, bool status) async {
+    final Database db = await database;
+    await db.update(
+      'WatchList',
+      {'watched': status == true ? 1 : 0},
+      where: 'id = ? and profile_id = ?',
+      whereArgs: [movie.id, profileId],
+    );
+  }
 }

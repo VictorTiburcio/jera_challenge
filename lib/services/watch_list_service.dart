@@ -18,4 +18,10 @@ class WatchListService {
     int profileId = prefs.getInt('current_profile_id');
     _database.addMovieToWatchList(movie, profileId);
   }
+
+  void changeWatchedStatus(Movie movie, bool status) async {
+    SharedPreferences prefs = await _prefs;
+    int profileId = prefs.getInt('current_profile_id');
+    _database.changeWatchedStatus(movie, profileId, status);
+  }
 }

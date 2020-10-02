@@ -33,6 +33,10 @@ class WatchListController extends ChangeNotifier {
     state = WatchListState.ready;
     notifyListeners();
   }
+
+  void changeWatchedStatus(Movie movie, bool status) {
+    _watchListService.changeWatchedStatus(movie, status);
+  }
 }
 
 enum WatchListState {
