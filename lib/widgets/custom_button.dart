@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
     return OutlineButton(
       textColor: Theme.of(context).primaryColor,
       disabledBorderColor: Colors.black45,
-      borderSide: BorderSide(color: Colors.black),
+      borderSide: BorderSide(color: Theme.of(context).primaryColor),
       child: child,
       onPressed: disabled ? null : onPressed,
       shape: RoundedRectangleBorder(

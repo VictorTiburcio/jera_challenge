@@ -25,7 +25,6 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
         '${Constants.lowQualityImageBaseUrl}/${widget.movie.posterPath}';
 
     return Container(
-      height: 450.0,
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
@@ -41,8 +40,14 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
               children: <Widget>[
                 InkWell(
                   child: widget.movie.watched
-                      ? Icon(Icons.visibility_off, color: Colors.redAccent)
-                      : Icon(Icons.visibility, color: Colors.redAccent),
+                      ? Icon(
+                          Icons.visibility_off,
+                          color: Theme.of(context).primaryColor,
+                        )
+                      : Icon(
+                          Icons.visibility,
+                          color: Theme.of(context).primaryColor,
+                        ),
                   onTap: () {
                     setState(() {
                       Provider.of<WatchListController>(
@@ -58,7 +63,10 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
                 ),
                 Spacer(),
                 InkWell(
-                  child: Icon(Icons.share, color: Colors.redAccent),
+                  child: Icon(
+                    Icons.share,
+                    color: Theme.of(context).primaryColor,
+                  ),
                   onTap: () {
                     sharePoster(posterPath, context);
                   },
