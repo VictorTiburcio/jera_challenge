@@ -16,7 +16,8 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    ThemeData theme = Theme.of(context);
+    final TextTheme textTheme = theme.textTheme;
     final AccountController accountCtrl =
         Provider.of<AccountController>(context, listen: false);
 
@@ -75,7 +76,7 @@ class SignInScreen extends StatelessWidget {
               Text.rich(
                 TextSpan(
                   text: 'Do not have an account yet?\t',
-                  style: textTheme.subtitle1,
+                  style: textTheme.subtitle1.apply(color: theme.primaryColor),
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Sign Up',

@@ -9,22 +9,18 @@ class MovieList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.separated(
-        shrinkWrap: true,
-        padding: EdgeInsets.all(16.0),
-        itemCount: movies.length,
-        itemBuilder: (context, index) {
-          if (movies[index].posterPath != null) {
-            return MovieCard(movies[index]);
-          } else {
-            return Container();
-          }
-        },
-        separatorBuilder: (context, index) {
-          return Divider();
-        },
-      ),
+    return GridView.count(
+      padding: const EdgeInsets.all(16.0),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      crossAxisCount: 2,
+      children: movies.map((movie) {
+        if (movie.posterPath != null) {
+          return MovieCard(movie);
+        } else {
+          return Container();
+        }
+      }).toList(),
     );
   }
 }

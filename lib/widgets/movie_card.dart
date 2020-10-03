@@ -13,7 +13,6 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450.0,
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
@@ -30,7 +29,10 @@ class MovieCard extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 InkWell(
-                  child: Icon(Icons.watch_later, color: Colors.redAccent),
+                  child: Icon(
+                    Icons.watch_later,
+                    color: Theme.of(context).primaryColor,
+                  ),
                   onTap: () {
                     Provider.of<WatchListController>(context, listen: false)
                         .addToWatchList(movie);

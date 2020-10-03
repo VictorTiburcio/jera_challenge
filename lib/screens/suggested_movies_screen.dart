@@ -9,7 +9,10 @@ class SuggestedMoviesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Suggested Movies'),
+        title: Text(
+          'Suggested Movies',
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
       ),
       body: Consumer<TheMovieDBController>(
         builder: (context, controller, child) {

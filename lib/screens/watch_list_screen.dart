@@ -9,7 +9,10 @@ class WatchListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Watch List'),
+        title: Text(
+          'Watch List',
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
       ),
       body: Consumer<WatchListController>(
         builder: (context, controller, child) {

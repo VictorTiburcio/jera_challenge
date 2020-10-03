@@ -13,7 +13,8 @@ class CustomTextFormField extends StatefulWidget {
       this.onChanged,
       this.masks,
       this.inputType = TextInputType.text,
-      this.capitalization = TextCapitalization.words});
+      this.capitalization = TextCapitalization.words,
+      this.prefixIcon});
   final TextEditingController ctrl;
   final String label;
   final String hint;
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatefulWidget {
   final List<TextInputFormatter> masks;
   final TextInputType inputType;
   final TextCapitalization capitalization;
+  final Icon prefixIcon;
 
   @override
   _CustomTextFormFieldState createState() => _CustomTextFormFieldState();
@@ -43,12 +45,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       if (_password) {
         _suffixIcon = FlatButton(
           textColor: Colors.black,
-          child: Icon(Icons.visibility),
+          child: Icon(Icons.visibility, color: Colors.green),
           onPressed: _changeTextVisibility,
         );
       } else {
         _suffixIcon = FlatButton(
-          child: Icon(Icons.visibility_off),
+          child: Icon(Icons.visibility_off, color: Colors.green),
           onPressed: _changeTextVisibility,
         );
       }
@@ -74,7 +76,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     if (_password) {
       _capitalization = TextCapitalization.none;
       _suffixIcon = FlatButton(
-        child: Icon(Icons.visibility),
+        child: Icon(Icons.visibility, color: Colors.green),
         onPressed: _changeTextVisibility,
       );
     }
@@ -82,10 +84,21 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    OutlineInputBorder _borderStyle = OutlineInputBorder(
+      gapPadding: 2.5,
+      borderRadius: BorderRadius.circular(5.0),
+      borderSide: BorderSide(
+        color: Theme.of(context).primaryColor,
+      ),
+    );
+
     return AbsorbPointer(
       absorbing: widget.readOnly,
       child: TextFormField(
-        autovalidate: widget.autovalidate,
+        cursorColor: Theme.of(context).primaryColor,
+        autovalidateMode: widget.autovalidate
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
         readOnly: widget.readOnly,
         inputFormatters: widget.masks,
         textCapitalization: _capitalization,
@@ -94,13 +107,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         keyboardType: widget.inputType,
         validator: _validator,
         onChanged: _onChanged,
+        style: TextStyle(color: Theme.of(context).primaryColor),
         decoration: InputDecoration(
+          prefixIcon: widget.prefixIcon,
+          labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+          hintStyle: TextStyle(color: Colors.green.shade800),
           labelText: widget.label,
           suffixIcon: _suffixIcon,
           hintText: widget.hint,
           contentPadding: EdgeInsets.only(top: 6.0, bottom: 6.0, left: 12.0),
-          border: OutlineInputBorder(
-              gapPadding: 2.5, borderRadius: BorderRadius.circular(5.0)),
+          enabledBorder: _borderStyle,
+          border: _borderStyle,
         ),
       ),
     );
