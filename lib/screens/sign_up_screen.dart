@@ -46,55 +46,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                     ),
                     SizedBox(height: 15.0),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: CustomTextFormField(
-                            readOnly: true,
-                            ctrl: _birthdayCtrl,
-                            label: 'Birthday',
-                            hint: 'DD/MM/YYYY',
-                            validator: (String text) {
-                              if (text.isEmpty) {
-                                return 'The birthday can\'t be blank!';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        SizedBox(width: 15.0),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 1.0),
-                          child: SizedBox(
-                            height: 46.5,
-                            width: 60,
-                            child: CustomButton(
-                              child: Icon(Icons.today),
-                              onPressed: () {
-                                showDatePicker(
-                                  helpText: 'Select Date',
-                                  context: context,
-                                  initialDate: DateTime(2000, 1, 15),
-                                  firstDate: DateTime.now()
-                                      .subtract(Duration(days: 36500)),
-                                  lastDate: DateTime.now(),
-                                ).then((date) {
-                                  if (date != null) {
-                                    setState(() {
-                                      _birthdayCtrl.text =
-                                          DateFormatter.dateToString(
-                                        date,
-                                        'dd/MM/yyyy',
-                                      );
-                                    });
-                                  }
-                                });
+                    InkWell(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: CustomTextFormField(
+                              readOnly: true,
+                              ctrl: _birthdayCtrl,
+                              label: 'Birthday',
+                              hint: 'DD/MM/YYYY',
+                              validator: (String text) {
+                                if (text.isEmpty) {
+                                  return 'The birthday can\'t be blank!';
+                                }
+                                return null;
                               },
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 15.0),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 1.0),
+                            child: SizedBox(
+                              height: 46.5,
+                              width: 60,
+                              child: CustomButton(
+                                child: Icon(Icons.today),
+                                onPressed: () {},
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      onTap: calendar,
                     ),
                     SizedBox(height: 15.0),
                     CustomTextFormField(
@@ -181,5 +165,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
       ),
     );
+  }
+
+  void calendar() {
+    showDatePicker(
+      helpText: 'Select Date',
+      context: context,
+      initialDate: DateTime(2000, 1, 15),
+      firstDate: DateTime.now().subtract(Duration(days: 36500)),
+      lastDate: DateTime.now(),
+    ).then((date) {
+      if (date != null) {
+        setState(() {
+          _birthdayCtrl.text = DateFormatter.dateToString(
+            date,
+            'dd/MM/yyyy',
+          );
+        });
+      }
+    });
   }
 }

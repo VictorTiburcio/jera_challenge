@@ -27,10 +27,7 @@ class _IndexScreenState extends State<IndexScreen> {
       body: _screens[_currentScreenIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Theme.of(context).accentColor,
         currentIndex: _currentScreenIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white60,
         onTap: (index) => setState(() => _currentScreenIndex = index),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

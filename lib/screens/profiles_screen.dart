@@ -16,10 +16,16 @@ class ProfilesScreen extends StatelessWidget {
           appBar: AppBar(
             title: Row(
               children: [
-                Text('Profiles'),
+                Text(
+                  'Profiles',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
                 Spacer(),
                 InkWell(
-                  child: Icon(Icons.logout),
+                  child: Icon(
+                    Icons.logout,
+                    color: Theme.of(context).primaryColor,
+                  ),
                   onTap: () {
                     Provider.of<AccountController>(context, listen: false)
                         .signOut();
@@ -35,12 +41,18 @@ class ProfilesScreen extends StatelessWidget {
             crossAxisCount: 2,
             children: controller.profiles.map((profile) {
               return FlatButton(
-                padding: EdgeInsets.zero,
-                child: Container(
-                  color: Colors.green,
-                  child: Center(child: Text(profile.name)),
+                color: Colors.grey.shade800,
+                child: Text(
+                  profile.name,
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-                onPressed: () async {
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                onPressed: () {
                   Provider.of<ProfileController>(context, listen: false)
                       .changeProfile(profile);
 
@@ -55,7 +67,7 @@ class ProfilesScreen extends StatelessWidget {
           ),
           floatingActionButton: controller.profiles.length < 4
               ? FloatingActionButton(
-                  child: Icon(Icons.add),
+                  child: Icon(Icons.add, color: Theme.of(context).primaryColor),
                   onPressed: () {
                     addNewProfile(context);
                   },
@@ -74,19 +86,26 @@ class ProfilesScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Create new profile'),
-          content: Form(
-            key: _formKey,
-            child: CustomTextFormField(
-              ctrl: _nameCtrl,
-              label: 'Name',
-              hint: 'Joice',
-              validator: (String text) {
-                if (text.trim().isEmpty) {
-                  return 'The name can\'t be blank!';
-                }
-                return null;
-              },
+          backgroundColor: Colors.grey.shade900,
+          title: Text(
+            'Create new profile',
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+          content: Container(
+            width: 300,
+            child: Form(
+              key: _formKey,
+              child: CustomTextFormField(
+                ctrl: _nameCtrl,
+                label: 'Name',
+                hint: 'Joice',
+                validator: (String text) {
+                  if (text.trim().isEmpty) {
+                    return 'The name can\'t be blank!';
+                  }
+                  return null;
+                },
+              ),
             ),
           ),
           actions: <Widget>[
