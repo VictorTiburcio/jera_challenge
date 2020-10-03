@@ -13,7 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData defaultTheme = ThemeData(
-      primarySwatch: Colors.blue,
+      primarySwatch: Colors.green,
+      scaffoldBackgroundColor: Colors.grey.shade900,
+      appBarTheme: AppBarTheme(
+        color: Colors.grey.shade800,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: Colors.grey.shade800,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.green.shade700,
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: Colors.grey.shade800,
+      ),
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
 
