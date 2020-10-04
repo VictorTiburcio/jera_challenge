@@ -110,6 +110,11 @@ class DatabaseProvider {
     }
   }
 
+  void deleteProfile(Profile profile) async {
+    final Database db = await database;
+    db.delete('Profiles', where: 'id = ?', whereArgs: [profile.id]);
+  }
+
   void addMovieToWatchList(Movie movie, int profileId) async {
     final Database db = await database;
     Map<String, dynamic> movieMap = movie.toMap();

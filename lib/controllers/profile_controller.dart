@@ -9,6 +9,7 @@ class ProfileController extends ChangeNotifier {
   final ProfileService _profileService = ProfileService();
   ProfileState state = ProfileState.ready;
   List<Profile> profiles = [];
+  Profile profileCurrentlyLogged = Profile('Loading', false, -1);
 
   void loadProfiles() async {
     state = ProfileState.loading;
@@ -21,6 +22,9 @@ class ProfileController extends ChangeNotifier {
       List<Profile> profileList = await _profileService.loadProfiles(account);
       if (profileList != null) {
         profiles = profileList;
+        int id = await _profileService.profileCurrentlyLoggedId();
+        profileCurrentlyLogged =
+            profiles.firstWhere((profile) => profile.id == id);
       }
     }
 
@@ -49,6 +53,19 @@ class ProfileController extends ChangeNotifier {
 
   void changeProfile(Profile profile) {
     _profileService.changeProfile(profile);
+    profileCurrentlyLogged = profile;
+
+    notifyListeners();
+  }
+
+  void deleteProfile(Profile profile) async {
+    profiles.remove(profile);
+    _profileService.deleteProfile(profile);
+    if (profile.id == profileCurrentlyLogged.id) {
+      changeProfile(profiles.firstWhere((profile) => profile.main));
+    }
+
+    notifyListeners();
   }
 }
 
