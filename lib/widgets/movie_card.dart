@@ -12,6 +12,30 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (movie.posterPath == null) {
+      return Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: InkWell(
+              child: Icon(
+                Icons.watch_later,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () => addToWatchList(context),
+            ),
+          ),
+          Center(
+            child: Icon(
+              Icons.broken_image,
+              size: 70,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+        ],
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -33,13 +57,7 @@ class MovieCard extends StatelessWidget {
                     Icons.watch_later,
                     color: Theme.of(context).primaryColor,
                   ),
-                  onTap: () {
-                    Provider.of<WatchListController>(context, listen: false)
-                        .addToWatchList(movie);
-
-                    Provider.of<TheMovieDBController>(context, listen: false)
-                        .suggestedMovies();
-                  },
+                  onTap: () => addToWatchList(context),
                 ),
               ],
             ),
@@ -47,5 +65,16 @@ class MovieCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void addToWatchList(BuildContext context) {
+    final WatchListController ctrl =
+        Provider.of<WatchListController>(context, listen: false);
+
+    if (!ctrl.movies.any((movie) => movie.id == this.movie.id)) {
+      ctrl.addToWatchList(movie);
+      Provider.of<TheMovieDBController>(context, listen: false)
+          .suggestedMovies();
+    }
   }
 }

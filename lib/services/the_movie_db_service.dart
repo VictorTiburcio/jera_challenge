@@ -8,8 +8,9 @@ class TheMovieDBService {
   static final Dio dio = Dio();
   final WatchListService watchListService = WatchListService();
 
-  Future<Response> popularMovies() async {
-    dio.options.baseUrl = Constants.popularMoviesUrl;
+  Future<Response> popularMovies(int page) async {
+    dio.options.baseUrl =
+        Constants.popularMoviesUrl.replaceFirst('{page}', '$page');
     try {
       Response response = await dio.get('');
       return response;
@@ -19,8 +20,9 @@ class TheMovieDBService {
     }
   }
 
-  Future<Response> search(String search) async {
-    dio.options.baseUrl = Constants.searchMovieUrl;
+  Future<Response> search(String search, int page) async {
+    dio.options.baseUrl =
+        Constants.searchMovieUrl.replaceFirst('{page}', '$page');
     try {
       Response response = await dio.get(search);
       return response;

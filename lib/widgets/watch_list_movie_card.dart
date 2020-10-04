@@ -93,6 +93,7 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: Colors.grey.shade900,
           content: Container(
             width: 150,
             height: 150,

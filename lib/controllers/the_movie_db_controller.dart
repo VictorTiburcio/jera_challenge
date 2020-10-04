@@ -6,49 +6,54 @@ import '../services/the_movie_db_service.dart';
 
 class TheMovieDBController extends ChangeNotifier {
   final TheMovieDBService theMovieDBService = TheMovieDBService();
-  PopularMoviesState popularMoviesState = PopularMoviesState.ready;
+  SearchMoviesState searchMoviesState = SearchMoviesState.ready;
   SuggestedMoviesState suggestedMoviesState = SuggestedMoviesState.ready;
   List<Movie> popularMoviesList = [];
+  List<Movie> searchMoviesList = [];
   List<Movie> suggestedMoviesList = [];
+  int page = 1;
 
   void init() {
     popularMovies();
     suggestedMovies();
   }
 
-  void popularMovies() async {
-    popularMoviesState = PopularMoviesState.loading;
+  Future<void> popularMovies() async {
+    searchMoviesState = SearchMoviesState.loading;
     notifyListeners();
 
-    Response response = await theMovieDBService.popularMovies();
+    page = 1;
+    Response response = await theMovieDBService.popularMovies(page);
     if (response.statusCode == 200) {
       popularMoviesList.clear();
+      searchMoviesList.clear();
       for (Map<String, dynamic> movie in response.data['results']) {
         popularMoviesList.add(Movie.fromMap(movie));
       }
     }
 
-    popularMoviesState = PopularMoviesState.ready;
+    searchMoviesState = SearchMoviesState.ready;
     notifyListeners();
   }
 
   void search(String search) async {
-    popularMoviesState = PopularMoviesState.loading;
+    searchMoviesState = SearchMoviesState.loading;
     notifyListeners();
 
     if (search.isEmpty) {
       popularMovies();
     } else {
-      Response response = await theMovieDBService.search(search);
+      page = 1;
+      Response response = await theMovieDBService.search(search, page);
       if (response.statusCode == 200) {
-        popularMoviesList.clear();
+        searchMoviesList.clear();
         for (Map<String, dynamic> movie in response.data['results']) {
-          popularMoviesList.add(Movie.fromMap(movie));
+          searchMoviesList.add(Movie.fromMap(movie));
         }
       }
     }
 
-    popularMoviesState = PopularMoviesState.ready;
+    searchMoviesState = SearchMoviesState.ready;
     notifyListeners();
   }
 
@@ -67,9 +72,29 @@ class TheMovieDBController extends ChangeNotifier {
     suggestedMoviesState = SuggestedMoviesState.ready;
     notifyListeners();
   }
+
+  void loadMorePopularMovies() async {
+    page += 1;
+    Response response = await theMovieDBService.popularMovies(page);
+    if (response.statusCode == 200) {
+      for (Map<String, dynamic> movie in response.data['results']) {
+        popularMoviesList.add(Movie.fromMap(movie));
+      }
+    }
+  }
+
+  void loadMoreSearchMovies(String search) async {
+    page += 1;
+    Response response = await theMovieDBService.search(search, page);
+    if (response.statusCode == 200) {
+      for (Map<String, dynamic> movie in response.data['results']) {
+        searchMoviesList.add(Movie.fromMap(movie));
+      }
+    }
+  }
 }
 
-enum PopularMoviesState {
+enum SearchMoviesState {
   loading,
   ready,
   error,
