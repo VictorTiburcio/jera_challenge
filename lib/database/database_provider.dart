@@ -150,4 +150,13 @@ class DatabaseProvider {
       whereArgs: [movie.id, profileId],
     );
   }
+
+  void removeMovie(Movie movie, int profileId) async {
+    final Database db = await database;
+    await db.delete(
+      'WatchList',
+      where: 'id = ? and profile_id = ?',
+      whereArgs: [movie.id, profileId],
+    );
+  }
 }
