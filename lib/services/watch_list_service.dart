@@ -24,4 +24,10 @@ class WatchListService {
     int profileId = prefs.getInt('current_profile_id');
     _database.changeWatchedStatus(movie, profileId, status);
   }
+
+  void removeMovie(Movie movie) async {
+    SharedPreferences prefs = await _prefs;
+    int profileId = prefs.getInt('current_profile_id');
+    _database.removeMovie(movie, profileId);
+  }
 }
