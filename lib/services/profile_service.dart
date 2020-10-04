@@ -20,4 +20,13 @@ class ProfileService {
     SharedPreferences prefs = await _prefs;
     prefs.setInt('current_profile_id', profile.id);
   }
+
+  Future<int> profileCurrentlyLoggedId() async {
+    SharedPreferences prefs = await _prefs;
+    return prefs.getInt('current_profile_id');
+  }
+
+  void deleteProfile(Profile profile) {
+    database.deleteProfile(profile);
+  }
 }
