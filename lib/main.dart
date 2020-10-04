@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/account_controller.dart';
@@ -7,7 +8,12 @@ import 'controllers/the_movie_db_controller.dart';
 import 'controllers/watch_list_controller.dart';
 import 'utils/mobile_router.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  List<DeviceOrientation> orientations = [DeviceOrientation.portraitUp];
+  SystemChrome.setPreferredOrientations(orientations)
+      .then((_) => runApp(MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   @override
