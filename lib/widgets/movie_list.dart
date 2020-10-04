@@ -15,11 +15,7 @@ class MovieList extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisCount: 2,
       children: movies.map((movie) {
-        if (movie.posterPath != null) {
-          return MovieCard(movie);
-        } else {
-          return Container();
-        }
+        return MovieCard(movie);
       }).toList(),
     );
   }

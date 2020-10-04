@@ -6,8 +6,7 @@ import '../controllers/the_movie_db_controller.dart';
 import 'custom_text_form_field.dart';
 
 class MovieSearchBar extends StatelessWidget {
-  final TextEditingController _searchCtrl;
-  MovieSearchBar(this._searchCtrl);
+  static final TextEditingController searchCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class MovieSearchBar extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: CustomTextFormField(
-            ctrl: _searchCtrl,
+            ctrl: searchCtrl,
             label: 'Search',
             hint: 'Movie name',
             prefixIcon: Icon(
@@ -35,7 +34,7 @@ class MovieSearchBar extends StatelessWidget {
             ),
             onPressed: () {
               Provider.of<TheMovieDBController>(context, listen: false)
-                  .search(_searchCtrl.text.trim());
+                  .search(searchCtrl.text.trim());
             },
           ),
         )
