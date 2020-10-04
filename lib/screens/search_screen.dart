@@ -2,22 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/the_movie_db_controller.dart';
-import '../widgets/movie_list.dart';
 import '../widgets/movie_search_bar.dart';
+import '../widgets/updatable_movie_list.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   static const String route = '/search';
 
   @override
-  _SearchScreenState createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
-  final TextEditingController _searchCtrl = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    final MovieSearchBar _searchBar = MovieSearchBar(_searchCtrl);
+    final MovieSearchBar _searchBar = MovieSearchBar();
 
     return Scaffold(
       appBar: AppBar(
@@ -25,9 +18,12 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: Consumer<TheMovieDBController>(
         builder: (context, controller, child) {
-          switch (controller.popularMoviesState) {
-            case PopularMoviesState.ready:
-              return MovieList(controller.popularMoviesList);
+          switch (controller.searchMoviesState) {
+            case SearchMoviesState.ready:
+              if (controller.searchMoviesList.isNotEmpty) {
+                return UpdatableMovieList(controller.searchMoviesList);
+              }
+              return UpdatableMovieList(controller.popularMoviesList);
             default:
               return Center(child: CircularProgressIndicator());
           }

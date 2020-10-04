@@ -3,13 +3,13 @@ class Constants {
   static const String baseUrl = 'https://api.themoviedb.org/3';
   static const String language = 'en-US';
   static const String popularMoviesUrl =
-      '$baseUrl/movie/popular?api_key=$apiKey&language=$language&include_adult=false';
+      '$baseUrl/movie/popular?api_key=$apiKey&language=$language&include_adult=false&page={page}';
   static const String imagesBaseUrl = 'https://image.tmdb.org/t/p';
   static const String lowQualityImageCode = 'w500';
   static const String lowQualityImageBaseUrl =
       '$imagesBaseUrl/$lowQualityImageCode';
   static const String searchMovieUrl =
-      '$baseUrl/search/movie?api_key=$apiKey&language=$language&include_adult=false&query=';
+      '$baseUrl/search/movie?api_key=$apiKey&language=$language&include_adult=false&page={page}&query=';
   static const String suggestedMoviesUrl =
       '$baseUrl/movie/{movie_id}/similar?api_key=$apiKey&language=$language&include_adult=false';
 }
