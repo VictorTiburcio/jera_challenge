@@ -70,9 +70,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: SizedBox(
                               height: 46.5,
                               width: 60,
-                              child: CustomButton(
-                                child: Icon(Icons.today),
-                                onPressed: () {},
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: Icon(
+                                  Icons.today,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                             ),
                           ),
@@ -85,6 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ctrl: _emailCtrl,
                       label: 'Email',
                       hint: 'example@example.com',
+                      inputType: TextInputType.emailAddress,
                       capitalization: TextCapitalization.none,
                       validator: (String text) {
                         if (text.trim().isEmpty) {
