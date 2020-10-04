@@ -5,6 +5,7 @@ import '../controllers/account_controller.dart';
 import '../controllers/profile_controller.dart';
 import '../controllers/the_movie_db_controller.dart';
 import '../controllers/watch_list_controller.dart';
+import '../models/profile.dart';
 import '../widgets/custom_text_form_field.dart';
 
 class ProfilesScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class ProfilesScreen extends StatelessWidget {
             title: Row(
               children: [
                 Text(
-                  'Profiles',
+                  'Profiles - ${controller.profileCurrentlyLogged.name}',
                   style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
                 Spacer(),
@@ -40,28 +41,48 @@ class ProfilesScreen extends StatelessWidget {
             mainAxisSpacing: 10,
             crossAxisCount: 2,
             children: controller.profiles.map((profile) {
-              return FlatButton(
-                color: Colors.grey.shade800,
-                child: Text(
-                  profile.name,
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Theme.of(context).primaryColor,
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  FlatButton(
+                    color: Colors.grey.shade800,
+                    child: Text(
+                      profile.name,
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    onPressed: () {
+                      Provider.of<ProfileController>(context, listen: false)
+                          .changeProfile(profile);
+
+                      Provider.of<WatchListController>(context, listen: false)
+                          .loadWatchList();
+
+                      Provider.of<TheMovieDBController>(context, listen: false)
+                          .suggestedMovies();
+                    },
                   ),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                onPressed: () {
-                  Provider.of<ProfileController>(context, listen: false)
-                      .changeProfile(profile);
-
-                  Provider.of<WatchListController>(context, listen: false)
-                      .loadWatchList();
-
-                  Provider.of<TheMovieDBController>(context, listen: false)
-                      .suggestedMovies();
-                },
+                  !profile.main
+                      ? Padding(
+                          padding: EdgeInsets.only(top: 10.0, right: 10.0),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: InkWell(
+                              child: Icon(
+                                Icons.remove_circle,
+                                color: Colors.red,
+                              ),
+                              onTap: () => removeProfile(context, profile),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
               );
             }).toList(),
           ),
@@ -73,6 +94,44 @@ class ProfilesScreen extends StatelessWidget {
                   },
                 )
               : Container(),
+        );
+      },
+    );
+  }
+
+  void removeProfile(BuildContext context, Profile profile) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey.shade900,
+          title: Text(
+            'Delete Profile',
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+          content: Container(
+            width: 300,
+            child: Text(
+              'Are you sure that you want to delete this profile?',
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: new Text('Delete'),
+              onPressed: () {
+                Provider.of<ProfileController>(context, listen: false)
+                    .deleteProfile(profile);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         );
       },
     );
