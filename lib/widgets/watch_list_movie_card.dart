@@ -25,6 +25,76 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
     String posterPath =
         '${Constants.lowQualityImageBaseUrl}/${widget.movie.posterPath}';
 
+    if (widget.movie.posterPath == null) {
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                  child: Icon(
+                    Icons.remove_circle,
+                    color: Colors.red,
+                  ),
+                  onTap: () => removeMovie(context, widget.movie)),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                children: <Widget>[
+                  InkWell(
+                    child: widget.movie.watched
+                        ? Icon(
+                            Icons.visibility_off,
+                            color: Theme.of(context).primaryColor,
+                          )
+                        : Icon(
+                            Icons.visibility,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                    onTap: () {
+                      setState(() {
+                        Provider.of<WatchListController>(
+                          context,
+                          listen: false,
+                        ).changeWatchedStatus(
+                          widget.movie,
+                          !widget.movie.watched,
+                        );
+                        widget.movie.watched = !widget.movie.watched;
+                      });
+                    },
+                  ),
+                  Spacer(),
+                  InkWell(
+                    child: Icon(
+                      Icons.share,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    onTap: () {
+                      sharePoster(posterPath, context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Center(
+            child: Icon(
+              Icons.broken_image,
+              size: 70,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+        ],
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(

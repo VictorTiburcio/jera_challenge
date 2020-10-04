@@ -9,6 +9,8 @@ import '../models/profile.dart';
 import '../widgets/custom_text_form_field.dart';
 
 class ProfilesScreen extends StatelessWidget {
+  static const String route = '/profiles';
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileController>(

@@ -5,6 +5,8 @@ import '../controllers/the_movie_db_controller.dart';
 import '../widgets/movie_list.dart';
 
 class SuggestedMoviesScreen extends StatelessWidget {
+  static const String route = '/suggested_movies';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
