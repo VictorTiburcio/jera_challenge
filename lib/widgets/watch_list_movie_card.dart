@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controllers/the_movie_db_controller.dart';
 import '../controllers/watch_list_controller.dart';
 import '../models/movie.dart';
 import '../utils/constants.dart';
@@ -34,6 +35,19 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                  child: Icon(
+                    Icons.remove_circle,
+                    color: Colors.red,
+                  ),
+                  onTap: () => removeMovie(context, widget.movie)),
+            ),
+          ),
+          Spacer(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -104,5 +118,10 @@ class _WatchListMovieCardState extends State<WatchListMovieCard> {
         );
       },
     );
+  }
+
+  void removeMovie(BuildContext context, Movie movie) {
+    Provider.of<WatchListController>(context, listen: false).removeMovie(movie);
+    Provider.of<TheMovieDBController>(context, listen: false).suggestedMovies();
   }
 }
