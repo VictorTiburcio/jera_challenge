@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
+import '../screens/movie_screen.dart';
 import 'watch_list_movie_card.dart';
 
 class WatchListMovieList extends StatelessWidget {
@@ -15,11 +16,12 @@ class WatchListMovieList extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisCount: 2,
       children: movies.map((movie) {
-        if (movie.posterPath != null) {
-          return WatchListMovieCard(movie);
-        } else {
-          return Container();
-        }
+        return InkWell(
+          child: WatchListMovieCard(movie),
+          onTap: () {
+            Navigator.pushNamed(context, MovieScreen.route, arguments: movie);
+          },
+        );
       }).toList(),
     );
   }

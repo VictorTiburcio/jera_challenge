@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../controllers/the_movie_db_controller.dart';
 import '../models/movie.dart';
+import '../screens/movie_screen.dart';
 import 'movie_card.dart';
 import 'movie_search_bar.dart';
 
@@ -49,7 +50,13 @@ class _UpdatableMovieListState extends State<UpdatableMovieList> {
         mainAxisSpacing: 10,
         crossAxisCount: 2,
         children: widget.movies.map((movie) {
-          return MovieCard(movie);
+          return InkWell(
+            child: MovieCard(movie),
+            onTap: () {
+              print(movie.id);
+              Navigator.pushNamed(context, MovieScreen.route, arguments: movie);
+            },
+          );
         }).toList(),
       ),
     );
