@@ -5,6 +5,8 @@ import '../controllers/watch_list_controller.dart';
 import '../widgets/watch_list_movie_list.dart';
 
 class WatchListScreen extends StatelessWidget {
+  static const String route = '/watch_list';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
